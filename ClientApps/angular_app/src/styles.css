@@ -1,1 +1,56 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.toolbarContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.flexALignItemsCenter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.flex1 {
+    flex: 1;
+}
+
+.flex3 {
+    flex: 3;
+}
+
+.flexItemsToRight {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.navBarUserSection {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+}
+
+.example-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.no-hover-effect.mat-button.mat-primary .mat-button-focus-overlay,
+.no-hover-effect.mat-button.mat-accent .mat-button-focus-overlay,
+.no-hover-effect.mat-button.mat-warn .mat-button-focus-overlay {
+    background-color: transparent;
+}

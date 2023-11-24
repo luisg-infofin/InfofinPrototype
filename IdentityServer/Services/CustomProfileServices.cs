@@ -23,7 +23,8 @@ namespace IdentityServer.Services
             
             var claims = new List<Claim>
             {
-                new Claim("username", user.UserName)
+                new Claim("username", user.UserName),
+                new Claim("test", "Esta es una claim de prueba")
             };
 
             context.IssuedClaims.AddRange(claims);

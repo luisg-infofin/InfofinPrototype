@@ -34,6 +34,9 @@ try
     SeedData.EnsureSeedData(app);
     Log.Information("Done seeding database. Exiting.");
 
+    // AddCors
+    app.UseCors("angular");
+
     app.Run();
 }
 catch (Exception ex) when (

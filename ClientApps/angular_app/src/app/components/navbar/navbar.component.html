@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="toolbarContainer">
+    <div class="flexALignItemsCenter">
+        <mat-icon (click)="openSideNav()" style="cursor: pointer;">menu</mat-icon>
+        <span>Person's CRUD</span>
+    </div>
+
+    <div class="flexALignItemsCenter">
+
+        <button *ngIf="!(oidService.isUserLoggedIn$ | async)" mat-raised-button color="accent"
+            (click)="oidService.signIn()">Login</button>
+
+        <div class="navBarUserSection" *ngIf="(oidService.isUserLoggedIn$ | async)">
+            <span>Welcome {{ (user | async)?.username }}</span>
+            <button mat-raised-button color="accent" (click)="oidService.logOut()">Logout</button>
+        </div>
+    </div>
+</mat-toolbar>

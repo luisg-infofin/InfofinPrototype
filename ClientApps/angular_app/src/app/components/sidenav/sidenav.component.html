@@ -1,0 +1,19 @@
+Drawer content
+
+<mat-nav-list>
+    <mat-list-item (click)="goToPage('/')">
+        <button class="no-hover-effect" mat-button>
+            <mat-icon>dashboard</mat-icon>
+            Dashboard
+        </button>
+    </mat-list-item>
+
+
+    <mat-list-item *ngIf="oidService.isAuthenticated()" (click)="goToPage('/persons')">
+        <button class="no-hover-effect" mat-button>
+            <mat-icon>person</mat-icon>
+            Persons
+        </button>
+    </mat-list-item>
+
+</mat-nav-list>
