@@ -4,17 +4,16 @@ namespace CrudApi.Configurations
 {
     public static class AuthenticationConfiguration
     {
-        public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, string tokenAuthority)
+        public static IServiceCollection AddJWTAuthentication(this IServiceCollection services, IConfiguration configuration)
         {            
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                  .AddJwtBearer(options =>
                  {
                      // To know who issued the token
-                     options.Authority = tokenAuthority;
+                     options.Authority = configuration["IdentityUrl"];
                      options.RequireHttpsMetadata = false;
-                     options.TokenValidationParameters.ValidateAudience = false;
-                     options.TokenValidationParameters.NameClaimType = "username";
+                     options.TokenValidationParameters.ValidateAudience = false;                     
                  });
 
             return services;

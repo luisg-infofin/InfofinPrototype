@@ -24,11 +24,9 @@ namespace CrudApi.Data.Migrations
 
             modelBuilder.Entity("Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("NUMBER(10)");
-
-                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasColumnType("RAW(16)");
 
                     b.Property<string>("Address")
                         .HasColumnType("NVARCHAR2(2000)");

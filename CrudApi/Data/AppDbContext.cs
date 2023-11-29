@@ -14,8 +14,9 @@ namespace CrudApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+            //modelBuilder.HasDefaultSchema("Cru1dAPI");            
         }
-
+        
         public DbSet<User> Users { get; set; }
     }
 }

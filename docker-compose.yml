@@ -1,12 +1,149 @@
-# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
-
-version: '3.4'
-
-services:
-  identityserver:
-    image: identityserver
-    build:
-      context: .
-      dockerfile: IdentityServer/Dockerfile
+version: '3.1'
+services:  
+  
+  # DB Services
+  oracle-db:
+    image: container-registry.oracle.com/database/express:latest
+    restart: on-failure    
+    env_file: .env      
+    environment:
+      - ORACLE_SID=${ORACLE_SID}
+      - ORACLE_PDB=${ORACLE_PDB}
+      - ORACLE_PWD=${ORACLE_PWD}
+      - SOURCE_SCHEMA=${ORACLE_SCHEMA}
     ports:
-      - 5000:5000
+      - ${ORACLE_PORT}:${ORACLE_PORT}
+    volumes:
+      - /volumes/opt/oracle/oradata
+      # - oracle-data:/volumes/opt/oracle/oradata
+      # - oracle-backup:/volumes/opt/oracle/backup
+    healthcheck:
+      test: ["CMD", "sqlplus", "-L", "sys/Oracle_123@//localhost:1521/ORCLCDB as sysdba", "@healthcheck.sql"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  mongodb:
+    image: mongo
+    restart: on-failure    
+    environment:
+        - MONGO_INITDB_ROOT_USERNAME=${MONGO_USERNAME}
+        - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    ports:
+        - 27017:27017
+    volumes:
+        - /var/lib/mongodb/data
+
+  postgres:
+    image: postgres
+    restart: on-failure    
+    environment:
+        - POSTGRES_USER=${POSTGRES_USER}
+        - POSTGRES_PASSWORD=${POSTGRES_PWD}
+        - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+        - 5432:5432
+    volumes:
+        - /var/lib/postgresql/data
+
+  # RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+      - 5672:5672 # RabbitMQ
+      - 15672:15672 # RabbitMQ Management Web Browser
+
+  # CRUD API Service
+  crud-api:
+    image: spinalsubset69/crud-api:latest    
+    build:
+        context: .
+        dockerfile: CrudApi/Dockerfile
+    restart: on-failure    
+    environment:
+        - ASPNETCORE_ENVIRONMENT=${NETCORE_CRUD_ENVIRONMENT}
+        - ASPNETCORE_URLS=${NETCORE_CRUD_URLS}
+        - ConnectionStrings__DefaultConnection=${NETCORE_CRUD_DEFAULTCONNECTION}
+        - IdentityUrl=http://identity-svc
+        - RabbitMQ__Host=${RABBITMQ_HOST}
+    ports:
+        - 7001:80
+    depends_on:
+        - oracle-db    
+  
+  # Identity Service
+  identity-svc:
+    image: spinalsubset69/identity:latest
+    restart: always
+    build:
+        context: .
+        dockerfile: IdentityServer/Dockerfile        
+    environment:
+        - ASPNETCORE_ENVIRONMENT=${NETCORE_IDENTITY_ENVIRONMENT}
+        - ASPNETCORE_URLS=${NETCORE_IDENTITY_URLS}
+        - ConnectionStrings__DefaultConnection=${NETCORE_IDENTITY_DEFAULTCONNECTION}
+        - AngularClient__ClientId=${IDENTITY_ANGULAR_CLIENT_ID}
+        - AngularClient__RedirectUri=${IDENTITY_ANGULAR_REDIRECT_URI}
+        - AngularClient__PostlogutUri=${IDENTITY_ANGULAR_POST_LOGOUT_REDIRECT_URI}
+    ports:
+        - 5000:80
+    depends_on:
+        - postgres        
+
+# search Service
+  search-svc:
+    image: spinalsubset69/search:latest
+    restart: always
+    build:
+        context: .
+        dockerfile: SearchService/Dockerfile        
+    environment:
+        - ASPNETCORE_ENVIRONMENT=${NETCORE_SEARCH_ENVIRONMENT}
+        - ASPNETCORE_URLS=${NETCORE_SEARCH_URLS}
+        - ConnectionStrings__MongoDbConnection=${NETCORE_SEARCH_DEFAULTCONNECTION}
+        - CrudServiceUrl=http://crud-api
+        - RabbitMQ__Host=${RABBITMQ_HOST}
+    ports:
+        - 7002:80
+    depends_on:
+        - mongodb    
+
+# gateway Service
+  gateway-svc:
+    image: spinalsubset69/gateway:latest
+    restart: always
+    build:
+        context: .
+        dockerfile: GatewayService/Dockerfile        
+    environment:
+        - ASPNETCORE_ENVIRONMENT=${NETCORE_GATEWAY_ENVIRONMENT}
+        - ASPNETCORE_URLS=${NETCORE_GATEWAY_URLS}
+        - IdentityUrl=http://identity-svc
+    ports:
+        - 6001:80   
+
+# angular app
+  angular-app:
+    image: spinalsubset69/angular:latest
+    restart: always
+    build:
+        context: .
+        dockerfile: ClientApps/angular_app/Dockerfile        
+    environment:        
+      - API_URL=${ANGULAR_API_URL}
+      - IDENTITY_AUTHORITY=${IDENTITY_ANGULAR_AUTHORITY}
+      - IDENTITY_REDIRECT_URI=${IDENTITY_ANGULAR_REDIRECT_URI}
+      - IDENTITY_POST_LOGOUT_REDIRECT_URI=${IDENTITY_ANGULAR_POST_LOGOUT_REDIRECT_URI}
+      - IDENTITY_SCOPES=${IDENTITY_ANGULAR_SCOPES}
+      - IDENTITY_CLIENT_ID=${IDENTITY_ANGULAR_CLIENT_ID}
+    ports:
+        - 4200:80
+    depends_on:
+        - identity-svc
+        - gateway-svc
+
+# volumes:
+#   oracle-data:
+#   oracle-backup:
+#   mongodb:
+#   postgres:

@@ -11,9 +11,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Entities", "Entities\Entiti
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{B3FB31CF-81D6-43B0-A99A-DB53A42CA1D6}"
 	ProjectSection(SolutionItems) = preProject
-		initDockerCompose.bat = initDockerCompose.bat
 		docker-compose.dev.yml = docker-compose.dev.yml
+		initDockerCompose.bat = initDockerCompose.bat
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayService", "GatewayService\GatewayService.csproj", "{B1A6A5B8-9D2E-4D0C-846C-C06AA8A7B7E5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchService", "SearchService\SearchService.csproj", "{4A1E8B1B-D372-4200-A990-8D7564F80F18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService", "..\..\..\..\TEMP.AzureAD.000\source\repos\PrototypeToken\IdentityService\IdentityService.csproj", "{8CAC57F2-D404-44F8-AA92-2173C6221E04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,18 @@ Global
 		{AC6CDD0C-E4DE-47CE-86EC-DAF04177E596}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC6CDD0C-E4DE-47CE-86EC-DAF04177E596}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC6CDD0C-E4DE-47CE-86EC-DAF04177E596}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1A6A5B8-9D2E-4D0C-846C-C06AA8A7B7E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1A6A5B8-9D2E-4D0C-846C-C06AA8A7B7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1A6A5B8-9D2E-4D0C-846C-C06AA8A7B7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1A6A5B8-9D2E-4D0C-846C-C06AA8A7B7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

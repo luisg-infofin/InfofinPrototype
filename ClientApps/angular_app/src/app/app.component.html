@@ -2,10 +2,9 @@
 
 
 <mat-drawer-container autosize class="example-container" [hasBackdrop]="true">
-    <mat-drawer #drawer mode="side" [opened]="(isSideNavOpen | async)">       
+    <mat-drawer #drawer mode="side" [opened]="(isSideNavOpen | async)">
         <app-sidenav></app-sidenav>
     </mat-drawer>
-
     <mat-drawer-content>
         <router-outlet></router-outlet>
     </mat-drawer-content>

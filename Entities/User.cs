@@ -1,5 +1,7 @@
-﻿namespace Entities
-{
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Entities
+{    
     public class User : EntityAudience
     {                
         public string? Name { get; set; }

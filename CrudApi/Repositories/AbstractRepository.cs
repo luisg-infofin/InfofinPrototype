@@ -17,10 +17,11 @@ namespace CrudApi.Repositories
             _dbSet = _context.Set<T>(); 
         }
 
-        public async Task AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             _dbSet.Add(entity);
             await SaveChangesAsync();
+            return entity;
         }
 
         public async Task DeleteAsync(T entity)
@@ -34,7 +35,7 @@ namespace CrudApi.Repositories
             return await _dbSet.ToListAsync();
         }
 
-        public Task<T> GetByIdAsync(int id)
+        public Task<T> GetByIdAsync(Guid id)
         {
             return _dbSet.FirstOrDefaultAsync(x => x.Id == id);
         }

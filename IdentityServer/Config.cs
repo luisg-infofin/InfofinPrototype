@@ -21,11 +21,14 @@ namespace IdentityServer
         public static IEnumerable<ApiResource> ApiResources=>
             new ApiResource[]
             {
-                new ApiResource("demoApp"),
+                new ApiResource("demoApp", "Demo App")
+                {
+                    Scopes = {"demoApp"}
+                },
             };
 
-        public static IEnumerable<Client> Clients =>
-            new Client[]
+        public static IEnumerable<Client> Clients(IConfiguration configuration){
+            return new Client[]
             {
                 // postman client
                 new Client
@@ -41,18 +44,31 @@ namespace IdentityServer
                 // angular client
                 new Client
                 {
-                    ClientId = "angular_app",
-                    ClientName = "angular_app",                    
+                    ClientId = configuration["AngularClient:ClientId"],
+                    ClientName = configuration["AngularClient:ClientId"],                    
                     AllowedGrantTypes = { GrantType.Implicit },                   
-                    RedirectUris = {"http://localhost:4200/auth-callback"},
-                    PostLogoutRedirectUris = {"http://localhost:4200/logout-callback"},
-                    RequireClientSecret = false,
-                    AllowOfflineAccess = true,
+                    RedirectUris = {configuration["AngularClient:RedirectUri"]},
+                    PostLogoutRedirectUris = {configuration["AngularClient:PostlogutUri"]},
+                    RequireClientSecret = false,                    
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile },
                     AllowAccessTokensViaBrowser = true,                         
                 },
-            
+
+                // blazor client
+                new Client
+                {
+                    ClientId = configuration["BlazorClient:ClientId"],
+                    //ClientName = configuration["BlazorClient:ClientId"],
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    RequirePkce = true,
+                    RedirectUris = {configuration["BlazorClient:RedirectUri"]},
+                    PostLogoutRedirectUris = {configuration["BlazorClient:PostlogutUri"]},
+                    RequireClientSecret = false,                    
+                    AllowedCorsOrigins = {"http://localhost:3000"},
+                    AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile, "demoApp" },                                        
+                },     
             };
+        }            
     }
 }

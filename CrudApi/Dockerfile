@@ -12,6 +12,8 @@ COPY InfofinPrototype.sln InfofinPrototype.sln
 COPY CrudApi/CrudApi.csproj CrudApi/CrudApi.csproj
 COPY IdentityServer/IdentityServer.csproj IdentityServer/IdentityServer.csproj
 COPY Entities/Entities.csproj Entities/Entities.csproj
+COPY GatewayService/GatewayService.csproj GatewayService/GatewayService.csproj
+COPY SearchService/SearchService.csproj SearchService/SearchService.csproj
 
 # Restore packages deps
 RUN dotnet restore InfofinPrototype.sln

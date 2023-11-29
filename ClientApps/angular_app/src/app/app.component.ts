@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MenuService } from './services/menu.service';
+import { MenuService } from './persons/services/menu.service';
 import { Observable } from 'rxjs';
 import { MatDrawer } from '@angular/material/sidenav';
 
@@ -23,4 +23,8 @@ export class AppComponent implements OnInit {
       this.menuService.closeSideNav();
     });
   }
+
+
 }
+
+

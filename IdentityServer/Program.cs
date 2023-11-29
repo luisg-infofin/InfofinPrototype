@@ -35,7 +35,7 @@ try
     Log.Information("Done seeding database. Exiting.");
 
     // AddCors
-    app.UseCors("angular");
+    app.UseCors("ClientAppsPolicy");
 
     app.Run();
 }

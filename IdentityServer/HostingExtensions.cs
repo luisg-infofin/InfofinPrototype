@@ -15,9 +15,9 @@ namespace IdentityServer
 
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("angular", policy =>
+                options.AddPolicy("ClientAppsPolicy", policy =>
                 {
-                    policy.WithOrigins("http://localhost:4200")
+                    policy.WithOrigins("http://localhost:4200", "http://localhost:3000")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
@@ -26,7 +26,7 @@ namespace IdentityServer
             builder.Services.AddRazorPages();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseOracle(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -38,11 +38,11 @@ namespace IdentityServer
                     options.Events.RaiseErrorEvents = true;
                     options.Events.RaiseInformationEvents = true;
                     options.Events.RaiseFailureEvents = true;
-                    options.Events.RaiseSuccessEvents = true;
+                    options.Events.RaiseSuccessEvents = true;                    
 
                     if (builder.Environment.IsEnvironment("Development"))
                     {
-                        options.IssuerUri = "http://identity-svc"; // instead of localhost:500
+                        options.IssuerUri = "http://localhost:5000"; // instead of localhost:500
                     }
 
                     // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
@@ -51,7 +51,7 @@ namespace IdentityServer
                 .AddInMemoryIdentityResources(Config.IdentityResources)
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryApiResources(Config.ApiResources)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(Config.Clients(builder.Configuration))
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddProfileService<CustomProfileServices>();
 
@@ -78,10 +78,14 @@ namespace IdentityServer
             app.UseStaticFiles();
             app.UseRouting();
             app.UseIdentityServer();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapRazorPages()
                 .RequireAuthorization();
+
+            app.UseHttpsRedirection();
 
             return app;
         }

@@ -1,5 +1,6 @@
 @echo off
 
+IF "%~2" == "NO" GOTO DEV_DOCKER_COMPOSE
 IF "%~2" == "" GOTO NO_CREDS_GIVEN
 IF "%~3" == "" GOTO NO_CREDS_GIVEN
 
@@ -11,17 +12,29 @@ IF %1 == PROD GOTO PROD_DOCKER_COMPOSE
 GOTO ARGUMENT_INVALID
 
 :DEV_DOCKER_COMPOSE
+echo ======================= Building Gateway Service =======================
+
+docker compose build gateway-svc
+
 echo ======================= Building Crud API =======================
 
-docker compose -f docker-compose.dev.yml build crud-api
+docker compose build crud-api
 
-echo ======================= Building Identity API =======================
+echo ======================= Building Search Service =======================
 
-docker compose -f docker-compose.dev.yml build identity-svc
+docker compose build search-svc
+
+echo ======================= Building Identity Service =======================
+
+docker compose build identity-svc
+
+echo ======================= Building Angular App =======================
+
+docker compose build angular-app
 
 echo ======================= Building container =======================
 
-docker compose -f docker-compose.dev.yml up -d 
+docker compose --env-file=.env up -d 
 
 echo ======================= Build finished =======================
 

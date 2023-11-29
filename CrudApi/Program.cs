@@ -17,10 +17,24 @@ builder.Services.AddDb(builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddRepositories();
 
 // Add Authentication
-builder.Services.AddJWTAuthentication(builder.Configuration["IdentityUrl"]);
+builder.Services.AddJWTAuthentication(builder.Configuration);
 
 // Add Automapper
 builder.Services.AddAutoMapperProfiles();
+
+// Add RabbitMQ
+builder.Services.AddRabbitMQConfig(builder.Configuration);
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AppClientsPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
 
@@ -31,6 +45,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// AddCors
+app.UseCors("AppClientsPolicy");
 app.UseHttpsRedirection();
 
 app.UseAuthentication();

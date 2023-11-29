@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities;
+using Entities.BusEvents;
 using Entities.Dtos;
 
 namespace CrudApi.Helpers
@@ -10,6 +11,8 @@ namespace CrudApi.Helpers
         {
             CreateMap<CreateUserDTO, User>();
             CreateMap<UpdateUserDto, User>().ReverseMap();
+            CreateMap<UserDTO, User>().ReverseMap();
+            CreateMap<User, PersonCreated>().ReverseMap();
         }
     }
 }
