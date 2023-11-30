@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { OidAuthenticationService } from '../../../auth/services/oid-authentication.service';
-import { User } from '../../../shared/interfaces/user.interface';
-import { Observable } from 'rxjs';
 import { StoreService } from '../../../store/store.service';
 import { MenuService } from '../../../persons/services/menu.service';
+import { OidcSecurityService } from 'angular-auth-oidc-client';
+import { SetUser } from '../../../store/actions/user.actions';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +11,12 @@ import { MenuService } from '../../../persons/services/menu.service';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  user: Observable<User>
+  user = this.storeService.getState(state => state.appUser);
+  isAuthenticated$ = this.authService.isAuthenticated$;
 
-  constructor(public oidService: OidAuthenticationService, private menuService: MenuService, private storeService: StoreService) {
-    this.user = this.storeService.getState(state => state.appUser);
+  constructor(private menuService: MenuService,
+    public authService: AuthService,
+    private storeService: StoreService) {
   }
 
   openSideNav() {

@@ -83,8 +83,8 @@ namespace CrudApi.Controllers
         }
 
         [Authorize]
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateUser(Guid id, [FromBody] UpdateUserDto args)
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser([FromQuery]Guid id, [FromBody] UpdateUserDto args)
         {
             try
             {
@@ -92,9 +92,16 @@ namespace CrudApi.Controllers
 
                 if (userOnDb is null) return NotFound("User not found on database");
 
-                userOnDb = _mapper.Map<UpdateUserDto, User>(args);
+                userOnDb.Name = args.Name;
+                userOnDb.Email = args.Email;
+                userOnDb.Address = args.Address;
+                userOnDb.UpdateAt = DateTime.Now;
+                userOnDb.UpdateUser = User?.Identity?.Name ?? "SYSTEM";
 
                 await _usersRepository.SaveChangesAsync();
+
+                var personUpdatedEventEntity = _mapper.Map<PersonUpdated>(userOnDb);
+                await _publishProvider.Publish(personUpdatedEventEntity);
                 return Ok();
             }
             catch (Exception ex)
@@ -104,17 +111,16 @@ namespace CrudApi.Controllers
         }
 
         [Authorize]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteUser(Guid id)
+        [HttpDelete]
+        public async Task<ActionResult> DeleteUser([FromQuery]Guid id)
         {
             try
             {
                 var userOnDb = await _usersRepository.GetByIdAsync(id);
-
                 if (userOnDb is null) return NotFound("User not found on database");
 
-
                 await _usersRepository.DeleteAsync(userOnDb);
+                await _publishProvider.Publish<PersonDeleted>(new PersonDeleted { Id = id });
                 return Ok();
             }
             catch (Exception ex)

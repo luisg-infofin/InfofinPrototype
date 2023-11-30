@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { OidAuthenticationService } from '../../services/oid-authentication.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,9 +7,7 @@ import { Router } from '@angular/router';
   styleUrl: './signout-callback.component.css'
 })
 export class SignoutCallbackComponent {
-  constructor(private oidService: OidAuthenticationService, private router: Router) {
-    this.oidService.completeLogout().then(_ => {
-      this.router.navigate(['/persons/home'], { replaceUrl: true });
-    });
+  constructor(private router: Router) {
+    this.router.navigate(['/'], { replaceUrl: true });;
   }
 }

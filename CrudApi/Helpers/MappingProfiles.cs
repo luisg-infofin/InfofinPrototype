@@ -13,6 +13,7 @@ namespace CrudApi.Helpers
             CreateMap<UpdateUserDto, User>().ReverseMap();
             CreateMap<UserDTO, User>().ReverseMap();
             CreateMap<User, PersonCreated>().ReverseMap();
+            CreateMap<PersonUpdated, User>().ReverseMap();
         }
     }
 }

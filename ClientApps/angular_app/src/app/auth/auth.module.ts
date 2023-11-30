@@ -15,4 +15,4 @@ import { AuthRoutingModule } from './auth-routing.module';
   ],
   exports: [AuthRoutingModule]
 })
-export class AuthModule { }
+export class AppAuthModule { }

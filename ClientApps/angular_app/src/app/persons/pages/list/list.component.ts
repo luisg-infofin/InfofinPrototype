@@ -13,10 +13,7 @@ import { PersonsService } from '../../services/persons.service';
 })
 export class ListComponent {
 
-  person: Person;
-
   constructor(public dialog: MatDialog, public personsService: PersonsService) {
-    this.person = new Person('', '', '');
   }
 
   openDialog(): void {
@@ -24,13 +21,13 @@ export class ListComponent {
       data: { name: '', email: '', address: '' },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.person = result;
-
-      this.personsService.postPerson(this.person).subscribe((_) => {
-        this.personsService.getPersons();
-      });
-
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result.isCancel) return;
+      if (!result.isEdit) {
+        this.personsService.postPerson(result.person).subscribe((_) => {
+          this.personsService.getPersons();
+        });
+      }
     });
   }
 

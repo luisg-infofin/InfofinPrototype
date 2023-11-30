@@ -1,6 +1,6 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { OidAuthenticationService } from '../../../auth/services/oid-authentication.service';
+import { AuthService } from '../../../auth/services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,8 +9,8 @@ import { OidAuthenticationService } from '../../../auth/services/oid-authenticat
 })
 export class SidenavComponent {
 
-
-  constructor(public oidService: OidAuthenticationService, private router: Router) { }
+  isAuthenticated$ = this.authService.isAuthenticated$;
+  constructor(private router: Router, public authService: AuthService) { }
 
   goToPage(page: string) {
     this.router.navigate([page]);

@@ -8,13 +8,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialModule } from './shared/angular-material/angular-material.module';
 import { PersonsModule } from './persons/persons.module';
-import { AuthModule } from './auth/auth.module';
+import { AppAuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 import { StoreService } from './store/store.service';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { appStore } from './store/app.stores';
 import { LoaderInterceptor } from './shared/interceptors/loader.interceptor';
+import { AuthInterceptor, AuthModule } from 'angular-auth-oidc-client';
+import { oidConfig } from './auth/services/oidConfig';
 import { AppHttpInterceptor } from './shared/interceptors/app.http.interceptor';
 
 
@@ -32,7 +34,10 @@ import { AppHttpInterceptor } from './shared/interceptors/app.http.interceptor';
     AngularMaterialModule,
     PersonsModule,
     SharedModule,
-    AuthModule,
+    AppAuthModule,
+    AuthModule.forRoot({
+      config: oidConfig
+    })
   ],
   providers: [
     {
@@ -40,11 +45,7 @@ import { AppHttpInterceptor } from './shared/interceptors/app.http.interceptor';
       provide: HTTP_INTERCEPTORS,
       multi: true
     },
-    {
-      useClass: AppHttpInterceptor,
-      provide: HTTP_INTERCEPTORS,
-      multi: true
-    },
+    { provide: HTTP_INTERCEPTORS, useClass: AppHttpInterceptor, multi: true },
     StoreService
   ],
   bootstrap: [AppComponent]

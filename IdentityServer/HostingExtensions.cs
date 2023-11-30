@@ -42,9 +42,9 @@ namespace IdentityServer
 
                     if (builder.Environment.IsEnvironment("Development"))
                     {
-                        options.IssuerUri = "http://localhost:5000"; // instead of localhost:500
+                        options.IssuerUri = "http://idenitity-svc"; // instead of localhost:500
                     }
-
+                    
                     // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                     //options.EmitStaticAudienceClaim = true;
                 })

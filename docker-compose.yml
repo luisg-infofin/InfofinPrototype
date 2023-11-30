@@ -122,25 +122,25 @@ services:
     ports:
         - 6001:80   
 
-# angular app
-  angular-app:
-    image: spinalsubset69/angular:latest
-    restart: always
-    build:
-        context: .
-        dockerfile: ClientApps/angular_app/Dockerfile        
-    environment:        
-      - API_URL=${ANGULAR_API_URL}
-      - IDENTITY_AUTHORITY=${IDENTITY_ANGULAR_AUTHORITY}
-      - IDENTITY_REDIRECT_URI=${IDENTITY_ANGULAR_REDIRECT_URI}
-      - IDENTITY_POST_LOGOUT_REDIRECT_URI=${IDENTITY_ANGULAR_POST_LOGOUT_REDIRECT_URI}
-      - IDENTITY_SCOPES=${IDENTITY_ANGULAR_SCOPES}
-      - IDENTITY_CLIENT_ID=${IDENTITY_ANGULAR_CLIENT_ID}
-    ports:
-        - 4200:80
-    depends_on:
-        - identity-svc
-        - gateway-svc
+# # angular app
+#   angular-app:
+#     image: spinalsubset69/angular:latest
+#     restart: always
+#     build:
+#         context: .
+#         dockerfile: ClientApps/angular_app/Dockerfile        
+#     environment:        
+#       - API_URL=${ANGULAR_API_URL}
+#       - IDENTITY_AUTHORITY=${IDENTITY_ANGULAR_AUTHORITY}
+#       - IDENTITY_REDIRECT_URI=${IDENTITY_ANGULAR_REDIRECT_URI}
+#       - IDENTITY_POST_LOGOUT_REDIRECT_URI=${IDENTITY_ANGULAR_POST_LOGOUT_REDIRECT_URI}
+#       - IDENTITY_SCOPES=${IDENTITY_ANGULAR_SCOPES}
+#       - IDENTITY_CLIENT_ID=${IDENTITY_ANGULAR_CLIENT_ID}
+#     ports:
+#         - 4200:80
+#     depends_on:
+#         - identity-svc
+#         - gateway-svc
 
 # volumes:
 #   oracle-data:

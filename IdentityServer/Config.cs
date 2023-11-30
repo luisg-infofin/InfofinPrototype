@@ -46,13 +46,14 @@ namespace IdentityServer
                 {
                     ClientId = configuration["AngularClient:ClientId"],
                     ClientName = configuration["AngularClient:ClientId"],                    
-                    AllowedGrantTypes = { GrantType.Implicit },                   
+                    AllowedGrantTypes = { GrantType.AuthorizationCode },         
+                    RequirePkce = true,
                     RedirectUris = {configuration["AngularClient:RedirectUri"]},
                     PostLogoutRedirectUris = {configuration["AngularClient:PostlogutUri"]},
                     RequireClientSecret = false,                    
                     AllowedCorsOrigins = {"http://localhost:4200"},
                     AllowedScopes = { IdentityServerConstants.StandardScopes.OpenId, IdentityServerConstants.StandardScopes.Profile },
-                    AllowAccessTokensViaBrowser = true,                         
+                    AllowOfflineAccess = true
                 },
 
                 // blazor client

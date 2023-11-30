@@ -28,10 +28,6 @@ echo ======================= Building Identity Service =======================
 
 docker compose build identity-svc
 
-echo ======================= Building Angular App =======================
-
-docker compose build angular-app
-
 echo ======================= Building container =======================
 
 docker compose --env-file=.env up -d 

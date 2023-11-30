@@ -18,7 +18,7 @@ namespace SearchService.Consumers
 
         public async Task Consume(ConsumeContext<PersonCreated> context)
         {
-            Console.WriteLine("--> Consuming Person Created: " + context.Message.Name);
+            Console.WriteLine("--> Consuming Person Created: " + context.Message.Id);
             var item = _mapper.Map<PersonCreated, Item>(context.Message);
 
             await item.SaveAsync();

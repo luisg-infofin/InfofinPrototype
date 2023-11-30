@@ -26,7 +26,7 @@
             "outputPath": "dist/angular_app",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
+            "polyfills": [              
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
@@ -42,7 +42,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"              
             ]
           },
           "configurations": {
@@ -90,7 +90,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
+            "polyfills": [              
               "zone.js",
               "zone.js/testing"
             ],

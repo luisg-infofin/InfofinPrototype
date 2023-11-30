@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GatewayService", "GatewaySe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SearchService", "SearchService\SearchService.csproj", "{4A1E8B1B-D372-4200-A990-8D7564F80F18}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService", "..\..\..\..\TEMP.AzureAD.000\source\repos\PrototypeToken\IdentityService\IdentityService.csproj", "{8CAC57F2-D404-44F8-AA92-2173C6221E04}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,10 @@ Global
 		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A1E8B1B-D372-4200-A990-8D7564F80F18}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CAC57F2-D404-44F8-AA92-2173C6221E04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47BCCFAD-9331-4796-9545-C535420D1934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47BCCFAD-9331-4796-9545-C535420D1934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47BCCFAD-9331-4796-9545-C535420D1934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47BCCFAD-9331-4796-9545-C535420D1934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

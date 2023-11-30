@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Entities.BusEvents;
-using Entities.Dtos;
 using SearchService.Models;
 
 namespace SearchService.Helpers
@@ -9,7 +8,8 @@ namespace SearchService.Helpers
     {
         public MappingProfile()
         {
-            CreateMap<PersonCreated, Item>().ReverseMap();
+            CreateMap<PersonCreated, Item>().ReverseMap();            
+            CreateMap<PersonUpdated, Item>().ReverseMap();
         }
     }
 }

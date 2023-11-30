@@ -10,7 +10,8 @@ namespace SearchService.Configurations
             services.AddMassTransit(x =>
             {
                 x.AddConsumersFromNamespaceContaining<PersonCreatedConsumer>();
-
+                x.AddConsumersFromNamespaceContaining<PersonUpdatedConsumer>();
+                x.AddConsumersFromNamespaceContaining<PersonDeletedConsumer>();
 
                 x.UsingRabbitMq((context, cfg) =>
                 {
@@ -27,6 +28,17 @@ namespace SearchService.Configurations
                         e.ConfigureConsumer<PersonCreatedConsumer>(context);
                     });
 
+                    cfg.ReceiveEndpoint("search-person-updated", e =>
+                    {
+                        e.UseMessageRetry(r => r.Interval(5, 5));
+                        e.ConfigureConsumer<PersonUpdatedConsumer>(context);
+                    });
+
+                    cfg.ReceiveEndpoint("search-person-deleted", e =>
+                    {
+                        e.UseMessageRetry(r => r.Interval(5, 5));
+                        e.ConfigureConsumer<PersonDeletedConsumer>(context);
+                    });
 
                     cfg.ConfigureEndpoints(context);
                 });

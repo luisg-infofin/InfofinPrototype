@@ -1,13 +1,12 @@
-import { UserManagerSettings } from "oidc-client";
-import { environment } from "../../../env/enviroment";
 
-export const oidConfig: UserManagerSettings = {
+import { environment } from "../../../env/enviroment";
+import { OpenIdConfiguration } from "angular-auth-oidc-client";
+
+export const oidConfig: OpenIdConfiguration = {
     authority: environment.identityAuthority,
-    client_id: environment.identityClientId,
-    redirect_uri: environment.identityRedirectUri,
-    post_logout_redirect_uri: environment.identityPostLogoutRedirectUri,
-    response_type: "id_token",
+    clientId: environment.identityClientId,
+    redirectUrl: environment.identityRedirectUri,
+    postLogoutRedirectUri: environment.identityPostLogoutRedirectUri,
+    responseType: "code",
     scope: environment.identityScopes,
-    filterProtocolClaims: true,
-    loadUserInfo: true,
 }

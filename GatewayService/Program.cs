@@ -37,20 +37,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.MapReverseProxy(proxyPipeline =>
-{
-    proxyPipeline.Use((context, next) =>
-    {
-        // Custom inline middleware
-        var request = context.Request;
-        Console.WriteLine("Request: " + request.Headers.Authorization);
-        return next();
-    });
-    proxyPipeline.UseSessionAffinity();
-    proxyPipeline.UseLoadBalancing();
-    proxyPipeline.UsePassiveHealthChecks();
-});
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
